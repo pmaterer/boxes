@@ -29,12 +29,6 @@ locals {
 }
 
 locals {
-  hostname = "box"
-  username = "packer"
-
-  password           = "packer"
-  encrypted_password = "$1$0WOmzOLg$.n19Ld4vk.QhKK8isMCLY/" # openssl passwd
-
-  ssh_private_key_file = "./keys/packer"
-  ssh_public_key       = file("${path.root}/keys/packer.pub")
+  ssh_private_key_file = "${path.root}/scripts/keys/packer"
+  ssh_public_key       = file("${path.root}/scripts/keys/packer.pub")
 }

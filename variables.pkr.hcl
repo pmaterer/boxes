@@ -34,44 +34,19 @@ variable "efi_firmware_vars" {
   default = null
 }
 
-variable "ubuntu_iso_url" {
+variable "disk_size" {
   type = string
 
-  default = null
+  default = "40G"
 }
 
-variable "ubuntu_iso_checksum" {
-  type = string
-
-  default = null
-}
-
-variable "ubuntu_version" {
-  type = string
-
-  default = "24.04"
-}
-
-
-variable "ubuntu_arch" {
-  type = string
-
-  default = "arm64"
-}
-
-variable "ubuntu_disk_size" {
-  type = string
-
-  default = "20G"
-}
-
-variable "ubuntu_memory" {
+variable "memory" {
   type = string
 
   default = "8192"
 }
 
-variable "ubuntu_cpus" {
+variable "cpus" {
   type = string
 
   default = "8"
