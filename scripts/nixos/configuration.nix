@@ -9,10 +9,10 @@
 
   nix.settings.experimental-features = [ "nix-command flakes" ];
 
+  boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev"; # for efi only
   boot.loader.grub.efiSupport = true;
-  boot.loader.grub.efiInstallAsRemovable = true;
 
   networking.hostName = "packer";
   networking.networkmanager.enable = true;
@@ -23,6 +23,7 @@
   users.users.packer = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+    hashedPassword = "$y$j9T$psQTDkKII7lznsNmyDeI30$9Bt2x4TDTd3X.8qF1U7xWY/XsZPLO9spROnpUXlKV9A"; # using passwd
   };
 
   environment.systemPackages = with pkgs; [
