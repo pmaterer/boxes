@@ -26,7 +26,7 @@ source "qemu" "ubuntu" {
   iso_checksum = local.ubuntu_iso_checksum
 
   accelerator  = local.accelerator
-  machine_type = "virt"
+  machine_type = local.machine_type
 
   disk_size = local.ubuntu_disk_size
   format    = "qcow2"

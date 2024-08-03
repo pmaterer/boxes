@@ -2,6 +2,7 @@ locals {
 
   nixos_iso_arch = {
     arm64 = "aarch64"
+    x86_64 = "x86_64"
   }
 
   nixos_iso          = var.nixos_iso_url == null ? "https://channels.nixos.org/nixos-${var.nixos_version}/latest-nixos-minimal-${local.nixos_iso_arch[var.host_arch]}-linux.iso" : var.nixos_iso_url
@@ -27,7 +28,7 @@ source "qemu" "nixos" {
   iso_checksum = local.nixos_iso_checksum
 
   accelerator  = local.accelerator
-  machine_type = "virt"
+  machine_type = local.machine_type
 
   disk_size = local.nixos_disk_size
   format    = "qcow2"

@@ -7,16 +7,20 @@ PACKER_BUILD_ON_ERROR ?= cleanup
 
 PACKER_BUILD_CMD := PACKER_LOG=${DEBUG} packer build -on-error="${PACKER_BUILD_ON_ERROR}" -warn-on-undeclared-var -var "host_os=${OS}" -var "host_arch=${ARCH}" -var "headless=${HEADLESS}"
 
+.PHONY: init
+init:
+	@packer init .
+
 .PHONY: build-all
-build-all:
+build-all: init
 	@${PACKER_BUILD_CMD} .
 
 .PHONY: build-ubuntu
-build-ubuntu:
+build-ubuntu: init
 	@${PACKER_BUILD_CMD} -only=ubuntu.qemu.ubuntu .
 
 .PHONY: build-nixos
-build-nixos:
+build-nixos: init
 	${PACKER_BUILD_CMD} -only=nixos.qemu.nixos .
 
 .PHONY: fmt
