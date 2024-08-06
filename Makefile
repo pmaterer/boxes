@@ -5,7 +5,7 @@ DEBUG ?= 0
 
 PACKER_BUILD_ON_ERROR ?= cleanup
 
-PACKER_BUILD_CMD := PACKER_LOG=${DEBUG} packer build -on-error="${PACKER_BUILD_ON_ERROR}" -warn-on-undeclared-var -var "host_os=${OS}" -var "host_arch=${ARCH}" -var "headless=${HEADLESS}"
+PACKER_BUILD_CMD := PACKER_LOG=${DEBUG} packer build -on-error="${PACKER_BUILD_ON_ERROR}" -warn-on-undeclared-var -var "host_os=${OS}" -var "host_arch=${ARCH}"
 
 .PHONY: init
 init:
