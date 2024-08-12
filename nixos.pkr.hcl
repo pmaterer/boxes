@@ -1,7 +1,7 @@
 locals {
 
   nixos_iso_arch = {
-    arm64 = "aarch64"
+    arm64  = "aarch64"
     x86_64 = "x86_64"
   }
 
@@ -16,6 +16,9 @@ locals {
   nixos_cpus      = var.nixos_cpus == null ? var.cpus : var.nixos_cpus
 
   nixos_username = "nixos"
+
+  nixos_http_root          = "/nixos"
+  nixos_http_template_root = "${path.root}/scripts/nixos"
 }
 
 source "qemu" "nixos" {
@@ -65,7 +68,20 @@ source "qemu" "nixos" {
     "sudo systemctl start sshd<enter>"
   ]
 
-  http_directory = "${path.root}/scripts"
+  # http_directory = "${path.root}/scripts"
+  http_content = {
+    "/keys/packer.pub" = file("${path.root}/scripts/keys/packer.pub")
+    "${local.nixos_http_root}/flake.nix" = templatefile("${local.nixos_http_template_root}/flake.nix.pkrtpl.hcl", {
+      system = "${var.host_arch}-linux"
+    })
+    "${local.nixos_http_root}/configuration.nix" = templatefile("${local.nixos_http_template_root}/configuration.nix.pkrtpl.hcl", {
+      packer_user_ssh_public_key = file("${path.root}/scripts/keys/packer.pub")
+    })
+    "${local.nixos_http_root}/hardware-configuration.nix" = templatefile("${local.nixos_http_template_root}/hardware-configuration.nix.pkrtpl.hcl", {
+      system = "${var.host_arch}-linux"
+    })
+    "${local.nixos_http_root}/disks.nix" = file("${local.nixos_http_template_root}/disks.nix")
+  }
 
   output_directory = "builds/${local.nixos_name}"
 }

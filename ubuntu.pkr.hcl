@@ -1,6 +1,18 @@
 locals {
-  ubuntu_iso          = var.ubuntu_iso_url == null ? "https://cdimage.ubuntu.com/releases/${var.ubuntu_version}/release/ubuntu-${var.ubuntu_version}-live-server-${var.host_arch}.iso" : var.ubuntu_iso_url
-  ubuntu_iso_checksum = var.ubuntu_iso_checksum == null ? "file:https://cdimage.ubuntu.com/releases/${var.ubuntu_version}/release/SHA256SUMS" : var.ubuntu_iso_checksum
+  ubuntu_iso_urls = {
+    arm64 = {
+      iso      = "https://cdimage.ubuntu.com/releases/${var.ubuntu_version}/release/ubuntu-${var.ubuntu_version}-live-server-arm64.iso"
+      checksum = "https://cdimage.ubuntu.com/releases/${var.ubuntu_version}/release/SHA256SUMS"
+    }
+    x86_64 = {
+      iso      = "http://releases.ubuntu.com/${var.ubuntu_version}/ubuntu-${var.ubuntu_version}-live-server-amd64.iso"
+      checksum = "http://releases.ubuntu.com/24.04/SHA256SUMS"
+    }
+
+  }
+
+  ubuntu_iso          = var.ubuntu_iso_url == null ? local.ubuntu_iso_urls[var.host_arch].iso : var.ubuntu_iso_url
+  ubuntu_iso_checksum = var.ubuntu_iso_checksum == null ? "file:${local.ubuntu_iso_urls[var.host_arch].checksum}" : var.ubuntu_iso_checksum
 
   ubuntu_name             = "ubuntu-${var.ubuntu_version}-${var.host_arch}"
   ubuntu_output_directory = "builds/${local.ubuntu_name}"

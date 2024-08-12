@@ -15,7 +15,7 @@ autoinstall:
       default:
         match:
           name: "e*"
-          macaddress: "52:54:00:12:34:56" # default mac assigned by qemu
+          # macaddress: "52:54:00:12:34:56" # default mac assigned by qemu
         dhcp4: true
   storage:
     layout:

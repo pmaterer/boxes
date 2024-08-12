@@ -15,18 +15,18 @@ locals {
 
   accelerator_os_map = {
     Darwin = "hvf"
-    Linux = "kvm"
+    Linux  = "kvm"
   }
 
   displays = {
     Darwin = "cocoa,show-cursor=on"
-    Linux = "gtk,show-cursor=on"
+    Linux  = "gtk,show-cursor=on"
   }
 
   accelerator = var.accelerator == null ? local.accelerator_os_map[var.host_os] : var.accelerator
 
   qemu_binary = {
-    arm64 = "qemu-system-aarch64"
+    arm64  = "qemu-system-aarch64"
     x86_64 = "qemu-system-x86_64"
   }
 

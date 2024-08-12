@@ -7,16 +7,10 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }: let
-    system = import ./system.nix;
-  in
-  {
+  outputs = { self, nixpkgs, disko }: {
     nixosConfigurations.packer = nixpkgs.lib.nixosSystem {
-      system = system;
-      modules = [
-        ./configuration.nix
-        inputs.disko.nixosModules.disko
-      ];
+      system = "${system}";
+      modules = [ ./configuration.nix disko.nixosModules.disko ];
     };
   };
 }
